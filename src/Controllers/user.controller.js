@@ -34,4 +34,37 @@ const getAllProducts = asyncPromise(async (req, res) => {
         allProducts
     );
 });
-export { addProduct, getAllProducts };
+
+const getProduct = asyncPromise(async (req, res) => {
+    const { id } = req.params;
+    const getSingleProduct = await usersSchema.findById(id);
+    if (!getSingleProduct) {
+        return handleError(null, res, "product not found", 404);
+    }
+    return handleSucces(
+        res,
+        "single product fetched successfully",
+        200,
+        getSingleProduct
+    );
+});
+
+const updateProduct = asyncPromise(async (req, res) => {
+    const { id } = req.params;
+    const getProduct = await usersSchema.findOne({ _id: id });
+    if (!getProduct) {
+        return handleError(null, res, "product not found", 404);
+    }
+    const updateProductData = await usersSchema.findOneAndUpdate(
+        { _id: id },
+        req.body,
+        { new: true }
+    );
+    return handleSucces(
+        res,
+        "product updated successfully",
+        200,
+        updateProductData
+    );
+});
+export { addProduct, getAllProducts, getProduct, updateProduct };
