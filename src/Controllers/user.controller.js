@@ -3,6 +3,7 @@ import { handleSucces, handleError } from "../Utils/errorHandle.js";
 import asyncPromise from "../Utils/asyncHandle.js";
 import { validationResult } from "express-validator";
 
+// *** add product *** //
 const addProduct = asyncPromise(async (req, res) => {
     const addProductErrors = validationResult(req);
     if (!addProductErrors.isEmpty()) {
@@ -25,6 +26,8 @@ const addProduct = asyncPromise(async (req, res) => {
     const addNewProduct = await usersSchema.create(req.body);
     return handleSucces(res, "product add successfully", 201, addNewProduct);
 });
+
+// *** get all products *** //
 const getAllProducts = asyncPromise(async (req, res) => {
     const allProducts = await usersSchema.find();
     return handleSucces(
@@ -35,6 +38,7 @@ const getAllProducts = asyncPromise(async (req, res) => {
     );
 });
 
+// *** get single product *** //
 const getProduct = asyncPromise(async (req, res) => {
     const { id } = req.params;
     const getSingleProduct = await usersSchema.findById(id);
@@ -49,6 +53,7 @@ const getProduct = asyncPromise(async (req, res) => {
     );
 });
 
+// *** update product *** //gi
 const updateProduct = asyncPromise(async (req, res) => {
     const { id } = req.params;
     const getProduct = await usersSchema.findOne({ _id: id });
