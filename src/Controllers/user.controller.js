@@ -13,7 +13,25 @@ const addProduct = asyncPromise(async (req, res) => {
             400
         );
     }
+    const { category, brand, productName } = req.body;
+    const findProduct = await usersSchema.findOne({
+        category,
+        brand,
+        productName,
+    });
+    if (findProduct) {
+        return handleError(null, res, "product already exists", 409);
+    }
     const addNewProduct = await usersSchema.create(req.body);
     return handleSucces(res, "product add successfully", 201, addNewProduct);
 });
-export default addProduct;
+const getAllProducts = asyncPromise(async (req, res) => {
+    const allProducts = await usersSchema.find();
+    return handleSucces(
+        res,
+        "all products fetched succesfully",
+        200,
+        allProducts
+    );
+});
+export { addProduct, getAllProducts };
