@@ -1,5 +1,5 @@
 import express from "express";
-import userRouter from "./Routes/users.route.js";
+import userRouter from "./Routes/product.route.js";
 import userSignup from "./Routes/userSignup.route.js";
 import cors from "cors";
 

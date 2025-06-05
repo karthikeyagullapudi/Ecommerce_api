@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const UsersSchema = new Schema(
+const ProductSchema = new Schema(
     {
         category: {
             type: String,
@@ -38,7 +38,15 @@ const UsersSchema = new Schema(
             type: String,
             required: true,
         },
-        images: {
+        images1: {
+            type: String,
+            required: true,
+        },
+        images2: {
+            type: String,
+            required: true,
+        },
+        images3: {
             type: String,
             required: true,
         },
@@ -57,4 +65,4 @@ const UsersSchema = new Schema(
     },
     { timestamps: true }
 );
-export default mongoose.model("usersSchema", UsersSchema);
+export default mongoose.model("productSchema", ProductSchema);

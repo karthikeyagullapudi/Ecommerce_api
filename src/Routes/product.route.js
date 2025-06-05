@@ -4,8 +4,8 @@ import {
     getAllProducts,
     getProduct,
     updateProduct,
-} from "../Controllers/user.controller.js";
-import userValidator from "../Validators/users.validators.js";
+} from "../Controllers/product.controller.js";
+import userValidator from "../Validators/product.validators.js";
 
 const user = Router();
 user.route("/addproduct").post(userValidator, addProduct);
