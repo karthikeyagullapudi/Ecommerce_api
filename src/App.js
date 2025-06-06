@@ -15,12 +15,12 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/products", productRouter);
-app.use("/api/users", userSignupRouter);
-app.use("/api/brands", brandRouter);
-app.use("/api/categories", categoryRouter);
-app.use("/api/colors", colorRouter);
-app.use("/api/subcategories", subCategoryRouter);
+app.use("/product", productRouter);
+app.use("/user", userSignupRouter);
+app.use("/add-brand", brandRouter);
+app.use("/add-category", categoryRouter);
+app.use("/add-color", colorRouter);
+app.use("/add-subcategory", subCategoryRouter);
 app.use("/file", fileRoute);
 
 export default app;
