@@ -1,4 +1,4 @@
-import usersSchema from "../Models/users.model.js";
+import productSchema from "../Models/product.model.js";
 import { handleSucces, handleError } from "../Utils/errorHandle.js";
 import asyncPromise from "../Utils/asyncHandle.js";
 import { validationResult } from "express-validator";
@@ -6,12 +6,11 @@ import { validationResult } from "express-validator";
 // *** add product *** //
 const addProduct = asyncPromise(async (req, res) => {
   const addProductErrors = validationResult(req);
-  console.log("add product validation", addProductErrors);
   if (!addProductErrors.isEmpty()) {
     return handleError(addProductErrors.array(), res, "product not added", 400);
   }
   const { category, brand, productName } = req.body;
-  const findProduct = await usersSchema.findOne({
+  const findProduct = await productSchema.findOne({
     category,
     brand,
     productName,
@@ -25,7 +24,7 @@ const addProduct = asyncPromise(async (req, res) => {
 
 // *** get all products *** //
 const getAllProducts = asyncPromise(async (req, res) => {
-  const allProducts = await usersSchema.find();
+  const allProducts = await productSchema.find();
   return handleSucces(
     res,
     "all products fetched succesfully",
@@ -37,7 +36,7 @@ const getAllProducts = asyncPromise(async (req, res) => {
 // *** get single product *** //
 const getProduct = asyncPromise(async (req, res) => {
   const { id } = req.params;
-  const getSingleProduct = await usersSchema.findById(id);
+  const getSingleProduct = await productSchema.findById(id);
   if (!getSingleProduct) {
     return handleError(null, res, "product not found", 404);
   }
@@ -52,11 +51,11 @@ const getProduct = asyncPromise(async (req, res) => {
 // *** update product *** //gi
 const updateProduct = asyncPromise(async (req, res) => {
   const { id } = req.params;
-  const getProduct = await usersSchema.findOne({ _id: id });
+  const getProduct = await productSchema.findOne({ _id: id });
   if (!getProduct) {
     return handleError(null, res, "product not found", 404);
   }
-  const updateProductData = await usersSchema.findOneAndUpdate(
+  const updateProductData = await productSchema.findOneAndUpdate(
     { _id: id },
     req.body,
     { new: true }

@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-const userValidator = [
+const productValidator = [
   body("category").trim().escape().notEmpty().withMessage("select a category"),
   body("subCategory")
     .trim()
@@ -21,6 +21,9 @@ const userValidator = [
   body("discount").trim().escape().notEmpty().withMessage("select a discount"),
   body("coupon").trim().escape().notEmpty().withMessage("select a coupon"),
   body("warranty").trim().escape().notEmpty().withMessage("select a warranty"),
+  body("images1").trim().escape().notEmpty().withMessage("select a images"),
+  body("images2").trim().escape().notEmpty().withMessage("select a images"),
+  body("images3").trim().escape().notEmpty().withMessage("select a images"),
   body("colors").trim().escape().notEmpty().withMessage("select a colors"),
   body("specifications")
     .trim()
@@ -28,4 +31,4 @@ const userValidator = [
     .notEmpty()
     .withMessage("select a specifications"),
 ];
-export default userValidator;
+export default productValidator;
