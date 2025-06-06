@@ -3,68 +3,87 @@ import { handleSucces, handleError } from "../Utils/errorHandle.js";
 import asyncPromise from "../Utils/asyncHandle.js";
 import { validationResult } from "express-validator";
 
-// *** add product *** //
+// *** Add Product *** //
 const addProduct = asyncPromise(async (req, res) => {
-  const addProductErrors = validationResult(req);
-  if (!addProductErrors.isEmpty()) {
-    return handleError(addProductErrors.array(), res, "product not added", 400);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error("Validation failed");
+    error.details = errors.array();
+    return handleError(error, res, "Product validation error", 400);
   }
+
   const { category, brand, productName } = req.body;
-  const findProduct = await productSchema.findOne({
+  const existingProduct = await productSchema.findOne({
     category,
     brand,
     productName,
   });
-  if (findProduct) {
-    return handleError(null, res, "product already exists", 409);
+
+  if (existingProduct) {
+    return handleError(
+      new Error("Duplicate product"),
+      res,
+      "Product already exists",
+      409
+    );
   }
-  const addNewProduct = await usersSchema.create(req.body);
-  return handleSucces(res, "product add successfully", 201, addNewProduct);
+
+  const newProduct = await productSchema.create(req.body);
+  return handleSucces(res, "Product added successfully", 201, newProduct);
 });
 
-// *** get all products *** //
+// *** Get All Products *** //
 const getAllProducts = asyncPromise(async (req, res) => {
-  const allProducts = await productSchema.find();
-  return handleSucces(
-    res,
-    "all products fetched succesfully",
-    200,
-    allProducts
-  );
+  const products = await productSchema.find();
+
+  if (!products || products.length === 0) {
+    return handleError(
+      new Error("No products found"),
+      res,
+      "No products available",
+      404
+    );
+  }
+
+  return handleSucces(res, "All products fetched successfully", 200, products);
 });
 
-// *** get single product *** //
+// *** Get Single Product by ID *** //
 const getProduct = asyncPromise(async (req, res) => {
   const { id } = req.params;
-  const getSingleProduct = await productSchema.findById(id);
-  if (!getSingleProduct) {
-    return handleError(null, res, "product not found", 404);
+  const product = await productSchema.findById(id);
+
+  if (!product) {
+    return handleError(
+      new Error("Invalid product ID"),
+      res,
+      "Product not found",
+      404
+    );
   }
-  return handleSucces(
-    res,
-    "single product fetched successfully",
-    200,
-    getSingleProduct
-  );
+
+  return handleSucces(res, "Product fetched successfully", 200, product);
 });
 
-// *** update product *** //gi
+// *** Update Product by ID *** //
 const updateProduct = asyncPromise(async (req, res) => {
   const { id } = req.params;
-  const getProduct = await productSchema.findOne({ _id: id });
-  if (!getProduct) {
-    return handleError(null, res, "product not found", 404);
+  const existingProduct = await productSchema.findById(id);
+
+  if (!existingProduct) {
+    return handleError(
+      new Error("Product to update not found"),
+      res,
+      "Product not found",
+      404
+    );
   }
-  const updateProductData = await productSchema.findOneAndUpdate(
-    { _id: id },
-    req.body,
-    { new: true }
-  );
-  return handleSucces(
-    res,
-    "product updated successfully",
-    200,
-    updateProductData
-  );
+
+  const updatedProduct = await productSchema.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
+
+  return handleSucces(res, "Product updated successfully", 200, updatedProduct);
 });
+
 export { addProduct, getAllProducts, getProduct, updateProduct };
