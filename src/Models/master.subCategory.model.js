@@ -1,10 +1,19 @@
 import mongoose, { Schema } from "mongoose";
 
-const subsubCategory = new Schema({
-  subsubCategory: {
-    type: String,
-    required: true,
+const subCategory = new Schema(
+  {
+    categoryName: {
+      type: String,
+      required: true,
+    },
+    subCategory: {
+      type: String,
+      required: true,
+    },
   },
-});
+  {
+    timestamps: true,
+  }
+);
 
-export default mongoose.model("subsubCategory", subsubCategory);
+export default mongoose.model("subCategory", subCategory);

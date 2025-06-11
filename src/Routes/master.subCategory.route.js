@@ -1,5 +1,5 @@
 import express from "express";
-import validateSubsubCategory from "../Validators/master.subcategory.validator.js";
+import validateSubCategory from "../Validators/master.subcategory.validator.js";
 import {
   createSubCategory,
   getAllSubCategories,
@@ -7,7 +7,7 @@ import {
 
 const router = express.Router();
 
-router.post("/add-subcategory", validateSubsubCategory, createSubCategory);
-router.get("/all-subcategories", getAllSubCategories);
+router.post("/add-subcategory", validateSubCategory, createSubCategory);
+router.get("/all-subcategories/:id", getAllSubCategories);
 
 export default router;
