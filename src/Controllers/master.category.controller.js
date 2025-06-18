@@ -25,7 +25,7 @@ const createCategory = asyncPromise(async (req, res) => {
 
 // Get all categories
 const getAllCategories = asyncPromise(async (req, res) => {
-  const categories = await categoryModel.find().sort({ category: 1 }); // Alphabetically sorted
+  const categories = await categoryModel.find();
   if (!categories.length) {
     return handleError(null, res, "No categories found", 404);
   }

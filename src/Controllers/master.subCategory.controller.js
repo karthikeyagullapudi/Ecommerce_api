@@ -31,8 +31,8 @@ const createSubCategory = asyncPromise(async (req, res) => {
   );
 });
 
-// Get all subcategories
-const getAllSubCategories = asyncPromise(async (req, res) => {
+// Get subCategory by ID
+const getSubCategory = asyncPromise(async (req, res) => {
   const param = req.params.id;
   const subCategories = await subCategoryModel.find({
     categoryName: param,
@@ -49,4 +49,18 @@ const getAllSubCategories = asyncPromise(async (req, res) => {
   );
 });
 
-export { createSubCategory, getAllSubCategories };
+//get all subCategories
+const getAllSubcategories = asyncPromise(async (req, res) => {
+  const response = await subCategoryModel.find();
+  if (!response.length) {
+    return handleError(null, res, "No sub-categories found", 404);
+  }
+  return handleSucces(
+    res,
+    "sub-Categories fetched successfully",
+    200,
+    response
+  );
+});
+
+export { createSubCategory, getSubCategory, getAllSubcategories };
