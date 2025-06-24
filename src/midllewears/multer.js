@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     const fileExtension = path.extname(file.originalname);
     cb(null, uuidv4() + fileExtension);
   },
-});
+});i9olu
 
 export const upload = multer({
   storage: storage,
