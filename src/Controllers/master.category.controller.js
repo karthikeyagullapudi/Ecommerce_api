@@ -11,25 +11,18 @@ const createCategory = asyncPromise(async (req, res) => {
   }
 
   const { category } = req.body;
+  const categoryName = category.trim().toLowerCase();
 
   const findCategory = await categoryModel.findOne({
-    category: category.trim(),
+    category: { $regex: `^${categoryName}$`, $options: "i" },
   });
+
   if (findCategory) {
     return handleError(null, res, "The category already exists", 409);
   }
 
-  const newCategory = await categoryModel.create({ category: category.trim() });
+  const newCategory = await categoryModel.create({ category: categoryName });
   return handleSucces(res, "New category has been created", 201, newCategory);
-});
-
-// Get all categories
-const getAllCategories = asyncPromise(async (req, res) => {
-  const categories = await categoryModel.find().sort({ category: 1 }); // Alphabetically sorted
-  if (!categories.length) {
-    return handleError(null, res, "No categories found", 404);
-  }
-  return handleSucces(res, "Categories fetched successfully", 200, categories);
 });
 
 export { createCategory, getAllCategories };
