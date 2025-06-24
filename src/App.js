@@ -7,7 +7,7 @@ import brandRouter from "./Routes/master.brand.route.js";
 import categoryRouter from "./Routes/master.category.route.js";
 import colorRouter from "./Routes/master.color.route.js";
 import subCategoryRouter from "./Routes/master.subCategory.route.js";
-
+import userAdmin from "./Routes/adminsignup.route.js";
 const app = express();
 
 // Middlewares
@@ -22,5 +22,5 @@ app.use("/category", categoryRouter);
 app.use("/color", colorRouter);
 app.use("/subcategory", subCategoryRouter);
 app.use("/file", fileRoute);
-
+app.use("/userAdmin", userAdmin);
 export default app;

@@ -1,14 +1,30 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 
-const userSignup = new Schema(
+const adminSignup = new Schema(
     {
+        name: {
+            type: String,
+            required: true,
+        },
         email: {
             type: String,
             required: true,
-            unique: true,
+            // unique: true,
+        },
+        phone: {
+            type: String,
+            required: true,
         },
         password: {
+            type: String,
+            required: true,
+        },
+        loginEmail: {
+            type: String,
+            required: true,
+        },
+        loginPassword: {
             type: String,
             required: true,
         },
@@ -20,7 +36,7 @@ const userSignup = new Schema(
     { timestamps: true }
 );
 
-userSignup.pre("save", async function (next) {
+adminSignup.pre("save", async function (next) {
     if (!this.isModified("password")) {
         return next();
     }
@@ -34,4 +50,4 @@ userSignup.pre("save", async function (next) {
     }
 });
 
-export default model("userSignup", userSignup);
+export default model("adminSignup", adminSignup);
