@@ -1,17 +1,16 @@
 import { body } from "express-validator";
 
-const validateSubsubCategory = [
-  body("subsubCategory")
+const validatesubCategory = [
+  body("categoryName")
     .notEmpty()
-    .withMessage("Sub-sub-category is required")
+    .withMessage("category is required")
     .isString()
-    .withMessage("Sub-sub-category must be a string")
-    .isLength({ min: 3 })
-    .withMessage("Must be at least 3 characters long")
-    .isLength({ max: 50 })
-    .withMessage("Must not exceed 50 characters")
-    .matches(/^[a-zA-Z0-9\s\-&()]+$/)
-    .withMessage("Invalid characters in sub-sub-category"),
+    .withMessage("category must be a string"),
+  body("subCategory")
+    .notEmpty()
+    .withMessage("Sub-category is required")
+    .isString()
+    .withMessage("Sub-category must be a string"),
 ];
 
-export default validateSubsubCategory;
+export default validatesubCategory;

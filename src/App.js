@@ -17,10 +17,10 @@ app.use(express.json());
 // Routes
 app.use("/product", productRouter);
 app.use("/user", userSignupRouter);
-app.use("/add-brand", brandRouter);
-app.use("/add-category", categoryRouter);
-app.use("/add-color", colorRouter);
-app.use("/add-subcategory", subCategoryRouter);
+app.use("/brand", brandRouter);
+app.use("/category", categoryRouter);
+app.use("/color", colorRouter);
+app.use("/subcategory", subCategoryRouter);
 app.use("/file", fileRoute);
 
 export default app;

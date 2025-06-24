@@ -25,4 +25,16 @@ const createCategory = asyncPromise(async (req, res) => {
   return handleSucces(res, "New category has been created", 201, newCategory);
 });
 
+<<<<<<< HEAD
+=======
+// Get all categories
+const getAllCategories = asyncPromise(async (req, res) => {
+  const categories = await categoryModel.find();
+  if (!categories.length) {
+    return handleError(null, res, "No categories found", 404);
+  }
+  return handleSucces(res, "Categories fetched successfully", 200, categories);
+});
+
+>>>>>>> 1e4bca551a5d3f73d2bc874d3c53f9c76b8992b8
 export { createCategory, getAllCategories };

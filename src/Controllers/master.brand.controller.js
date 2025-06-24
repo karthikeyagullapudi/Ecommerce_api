@@ -10,7 +10,7 @@ const createBrand = asyncPromise(async (req, res) => {
     return handleError(errors.array(), res, "Validation failed", 422);
   }
 
-  const { brand } = req.body;
+  const { category, subCategory, brand } = req.body;
 
   const findBrand = await brandModel.findOne({ brand: brand.trim() });
   if (findBrand) {
