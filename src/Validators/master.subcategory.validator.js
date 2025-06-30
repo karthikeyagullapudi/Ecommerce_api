@@ -1,7 +1,7 @@
 import { body } from "express-validator";
 
 const validatesubCategory = [
-  body("categoryName")
+  body("categoryId")
     .notEmpty()
     .withMessage("category is required")
     .isString()

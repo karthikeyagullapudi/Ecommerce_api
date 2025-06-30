@@ -10,7 +10,7 @@ const createSubCategory = asyncPromise(async (req, res) => {
     return handleError(errors.array(), res, "Validation failed", 422);
   }
 
-  const { categoryName, subCategory } = req.body;
+  const { categoryId, subCategory } = req.body;
 
   const findSubCategory = await subCategoryModel.findOne({
     subCategory: subCategory.trim(),
@@ -20,7 +20,7 @@ const createSubCategory = asyncPromise(async (req, res) => {
   }
 
   const newSubCategory = await subCategoryModel.create({
-    categoryName: categoryName.trim(),
+    categoryId: categoryId.trim(),
     subCategory: subCategory.trim(),
   });
   return handleSucces(
@@ -35,7 +35,7 @@ const createSubCategory = asyncPromise(async (req, res) => {
 const getSubCategory = asyncPromise(async (req, res) => {
   const param = req.params.id;
   const subCategories = await subCategoryModel.find({
-    categoryName: param,
+    categoryId: param,
   });
   console.log("sub categories===", subCategories);
   if (!subCategories.length) {
