@@ -8,6 +8,7 @@ import categoryRouter from "./Routes/master.category.route.js";
 import colorRouter from "./Routes/master.color.route.js";
 import subCategoryRouter from "./Routes/master.subCategory.route.js";
 import userAdmin from "./Routes/adminsignup.route.js";
+import couponRouter from "./Routes/master.coupon.route.js";
 const app = express();
 
 // Middlewares
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+app.use("/coupon", couponRouter);
 app.use("/product", productRouter);
 app.use("/user", userSignupRouter);
 app.use("/brand", brandRouter);

@@ -1,11 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 
 const brand = new Schema({
-  category: {
+  categoryId: {
     type: String,
     required: true,
   },
-  subCategory: {
+  subCategoryId: {
     type: String,
     required: true,
   },

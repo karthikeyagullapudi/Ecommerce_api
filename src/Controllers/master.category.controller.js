@@ -5,38 +5,33 @@ import { validationResult } from "express-validator";
 
 // Create category
 const createCategory = asyncPromise(async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return handleError(errors.array(), res, "Validation failed", 422);
-    }
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return handleError(errors.array(), res, "Validation failed", 422);
+  }
 
-    const { category } = req.body;
-    const categoryName = category.trim().toLowerCase();
+  const { category } = req.body;
+  const categoryName = category.trim().toLowerCase();
 
-    const findCategory = await categoryModel.findOne({
-        category: { $regex: `^${categoryName}$`, $options: "i" },
-    });
+  const findCategory = await categoryModel.findOne({
+    category: { $regex: `^${categoryName}$`, $options: "i" },
+  });
 
-    if (findCategory) {
-        return handleError(null, res, "The category already exists", 409);
-    }
+  if (findCategory) {
+    return handleError(null, res, "The category already exists", 409);
+  }
 
-    const newCategory = await categoryModel.create({ category: categoryName });
-    return handleSucces(res, "New category has been created", 201, newCategory);
+  const newCategory = await categoryModel.create({ category: categoryName });
+  return handleSucces(res, "New category has been created", 201, newCategory);
 });
 
 // Get all categories
 const getAllCategories = asyncPromise(async (req, res) => {
-    const categories = await categoryModel.find();
-    if (!categories.length) {
-        return handleError(null, res, "No categories found", 404);
-    }
-    return handleSucces(
-        res,
-        "Categories fetched successfully",
-        200,
-        categories
-    );
+  const categories = await categoryModel.find();
+  if (!categories.length) {
+    return handleError(null, res, "No categories found", 404);
+  }
+  return handleSucces(res, "Categories fetched successfully", 200, categories);
 });
 
 export { createCategory, getAllCategories };
