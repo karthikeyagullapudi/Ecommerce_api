@@ -24,6 +24,11 @@ export const validateProduct = [
     .withMessage("Product name is required")
     .isString()
     .withMessage("Product name must be a string"),
+  body("description")
+    .notEmpty()
+    .withMessage("Description is required")
+    .isString()
+    .withMessage("Description must be a string"),
 
   body("price")
     .notEmpty()
