@@ -22,6 +22,10 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
+    quantity: {
+      type: Number,
+      required: true,
+    },
     price: {
       type: Number,
       required: true,
@@ -42,7 +46,7 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
-    file: {
+    image1: {
       type: String,
     },
     colors: {

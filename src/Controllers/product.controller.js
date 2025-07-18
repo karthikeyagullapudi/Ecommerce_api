@@ -29,6 +29,7 @@ const addProduct = asyncPromise(async (req, res) => {
   }
 
   const newProduct = await productSchema.create(req.body);
+  console.log(req.body);
   return handleSucces(res, "Product added successfully", 201, newProduct);
 });
 
