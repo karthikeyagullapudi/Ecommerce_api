@@ -59,6 +59,66 @@ const ProductSchema = new Schema(
             default: true,
         },
     },
+<<<<<<< HEAD
     { timestamps: true }
+=======
+    subCategory: {
+      type: String,
+      required: true,
+    },
+    brand: {
+      type: String,
+      required: true,
+    },
+    productName: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    discountPrice: {
+      type: Number,
+      required: true,
+    },
+    discount: {
+      type: Number,
+      required: true,
+    },
+    coupon: {
+      type: String,
+      required: true,
+    },
+    warranty: {
+      type: String,
+      required: true,
+    },
+    image1: {
+      type: String,
+    },
+    colors: {
+      type: String,
+      required: true,
+    },
+    specifications: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  { timestamps: true }
+>>>>>>> 4cd8ddc64d518ac88203ff606fa1fc6c231ff905
 );
 export default mongoose.model("productSchema", ProductSchema);

@@ -29,6 +29,11 @@ export const validateProduct = [
     .withMessage("Description is required")
     .isString()
     .withMessage("Description must be a string"),
+  body("quantity")
+    .notEmpty()
+    .withMessage("Quantity is required")
+    .isInt({ min: 0 })
+    .withMessage("Quantity must be a non-negative integer"),
 
   body("price")
     .notEmpty()
@@ -60,7 +65,7 @@ export const validateProduct = [
     .isString()
     .withMessage("Warranty must be a string"),
 
-  body("file")
+  body("image1")
     .optional()
     .isString()
     .withMessage("File must be a string (e.g. filename or URL)"),
