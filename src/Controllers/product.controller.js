@@ -28,14 +28,8 @@ const addProduct = asyncPromise(async (req, res) => {
         );
     }
 
-<<<<<<< HEAD
     const newProduct = await productSchema.create(req.body);
     return handleSucces(res, "Product added successfully", 201, newProduct);
-=======
-  const newProduct = await productSchema.create(req.body);
-  console.log(req.body);
-  return handleSucces(res, "Product added successfully", 201, newProduct);
->>>>>>> 4cd8ddc64d518ac88203ff606fa1fc6c231ff905
 });
 
 // *** Get All Products *** //
