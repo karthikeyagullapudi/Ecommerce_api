@@ -21,6 +21,11 @@ const CartCollection = new Schema({
         type: String,
         required: true,
     },
+    quantity: {
+        type: Number,
+        required: true,
+        default: 1,
+    },
 });
 
 export default mongoose.model("CartCollection", CartCollection);
