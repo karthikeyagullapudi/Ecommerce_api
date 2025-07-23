@@ -5,6 +5,7 @@ const ProductSchema = new Schema(
     category: {
       type: String,
       required: true,
+      ref: "5",
     },
     subCategory: {
       type: String,
@@ -20,10 +21,6 @@ const ProductSchema = new Schema(
     },
     description: {
       type: String,
-      required: true,
-    },
-    quantity: {
-      type: Number,
       required: true,
     },
     price: {
@@ -46,7 +43,7 @@ const ProductSchema = new Schema(
       type: String,
       required: true,
     },
-    image1: {
+    file: {
       type: String,
     },
     colors: {

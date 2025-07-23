@@ -29,13 +29,12 @@ const addProduct = asyncPromise(async (req, res) => {
   }
 
   const newProduct = await productSchema.create(req.body);
-  console.log(req.body);
   return handleSucces(res, "Product added successfully", 201, newProduct);
 });
 
 // *** Get All Products *** //
 const getAllProducts = asyncPromise(async (req, res) => {
-  const products = await productSchema.find();
+  const products = await productSchema.find({});
 
   if (!products || products.length === 0) {
     return handleError(
