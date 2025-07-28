@@ -47,4 +47,25 @@ const getFavoritesByUser = asyncPromise(async (req, res) => {
   return handleSucces(res, "Favorites fetched successfully", 200, favorites);
 });
 
-export { addToFavorites, removeFromFavorites, getFavoritesByUser };
+// ✅ Get All Favorites (Admin)
+const getAllFavorites = asyncPromise(async (req, res) => {
+  const favorites = await Favorite.find().populate("productId userId");
+
+  if (!favorites.length) {
+    return handleError(null, res, "No favorites found", 404);
+  }
+
+  return handleSucces(
+    res,
+    "All favorites fetched successfully",
+    200,
+    favorites
+  );
+});
+
+export {
+  addToFavorites,
+  removeFromFavorites,
+  getFavoritesByUser,
+  getAllFavorites,
+};
