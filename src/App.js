@@ -10,6 +10,7 @@ import subCategoryRouter from "./Routes/master.subCategory.route.js";
 import userAdmin from "./Routes/adminsignup.route.js";
 import couponRouter from "./Routes/master.coupon.route.js";
 import cartRouter from "./Routes/cartCollection.router.js";
+import favoriteRoutes from "./Routes/favourite.routes.js";
 const app = express();
 
 // Middlewares
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+app.use("/favorite", favoriteRoutes);
 app.use("/cart", cartRouter);
 app.use("/coupon", couponRouter);
 app.use("/product", productRouter);
