@@ -9,6 +9,21 @@ const createCartCollection = asyncPromise(async (req, res) => {
   // if (!errors.isEmpty()) {
   //     return handleError(errors.array(), res, "Validation failed", 400);
   // }
+  const { productName, description, discountPrice } = req.body;
+  const AlreadyInCart = await CartCollection.findOne({
+    productName,
+    description,
+    discountPrice,
+  });
+
+  if (AlreadyInCart) {
+    return handleError(
+      new Error("Duplicate product"),
+      res,
+      "product already in cart",
+      409
+    );
+  }
 
   const newCartCollection = await CartCollection.create(req.body);
 
@@ -53,55 +68,48 @@ const getAllCartCollection = asyncPromise(async (req, res) => {
 });
 
 const RoleStatus = asyncPromise(async (req, res) => {
-    const { id } = req.params;
-    const Role_status = await roleModel.findOne({ _id: id });
-    if (!Role_status) {
-        handleError(res, "Role not found", 400, null);
-    }
-    const ChangeRole = await roleModel.findByIdAndUpdate(
-        { _id: id },
-        { status: 1 },
-        { quantity },
-        { price },
-        { new: true }
-    );
-    return handleSucces(
-        res,
-        "Role status updated successfully",
-        201,
-        ChangeRole
-    );
+  const { id } = req.params;
+  const Role_status = await roleModel.findOne({ _id: id });
+  if (!Role_status) {
+    handleError(res, "Role not found", 400, null);
+  }
+  const ChangeRole = await roleModel.findByIdAndUpdate(
+    { _id: id },
+    { status: 1 },
+    { quantity },
+    { price },
+    { new: true }
+  );
+  return handleSucces(res, "Role status updated successfully", 201, ChangeRole);
 });
 const DeleteCartItems = async (req, res) => {
-    try {
-        const productId = req.params.id;
-        if (!productId) {
-            return res.status(400).json({ message: "Product ID is required." });
-        }
-        const result = await CartCollection.deleteOne({ _id: productId });
-
-        if (result.deletedCount === 0) {
-            return res
-                .status(404)
-                .json({ message: "Product not found in cart." });
-        }
-
-        res.status(200).json({
-            message: "The product is removed from the cart.",
-            result,
-        });
-    } catch (error) {
-        res.status(500).json({
-            message: "Failed to delete cart item.",
-            error: error.message,
-        });
+  try {
+    const productId = req.params.id;
+    if (!productId) {
+      return res.status(400).json({ message: "Product ID is required." });
     }
+    const result = await CartCollection.deleteOne({ _id: productId });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Product not found in cart." });
+    }
+
+    res.status(200).json({
+      message: "The product is removed from the cart.",
+      result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to delete cart item.",
+      error: error.message,
+    });
+  }
 };
 
 export {
-    createCartCollection,
-    getCartCollection,
-    getAllCartCollection,
-    RoleStatus,
-    DeleteCartItems,
+  createCartCollection,
+  getCartCollection,
+  getAllCartCollection,
+  RoleStatus,
+  DeleteCartItems,
 };

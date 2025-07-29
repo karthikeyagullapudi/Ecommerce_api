@@ -1,10 +1,10 @@
 import express from "express";
 import {
-    addToFavorites,
-    removeFromFavorites,
-    getFavoritesByUser,
-    DeleteFavoritesItems,
-    getAllFavorites,
+  addToFavorites,
+  removeFromFavorites,
+  getFavoritesByUser,
+  DeleteFavoritesItems,
+  getAllFavorites,
 } from "../Controllers/favourite.controller.js";
 
 const router = express.Router();
