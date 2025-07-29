@@ -16,6 +16,10 @@ const FavoriteSchema = new Schema(
             type: Number,
             required: true,
         },
+        discountPrice: {
+            type: Number,
+            required: true,
+        },
     },
     {
         timestamps: true,
