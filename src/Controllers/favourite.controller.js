@@ -4,68 +4,72 @@ import asyncPromise from "../Utils/asyncHandle.js";
 
 // ✅ Add to Favorites
 const addToFavorites = asyncPromise(async (req, res) => {
-  const { userId, productId } = req.body;
+    const { productId, productName, price } = req.body;
 
-  const alreadyExists = await Favorite.findOne({ userId, productId });
-  if (alreadyExists) {
-    return handleSucces(
-      res,
-      "Product already in favorites",
-      200,
-      alreadyExists
-    );
-  }
+    const alreadyExists = await Favorite.findOne({ productId });
+    if (alreadyExists) {
+        return handleSucces(
+            res,
+            "Product already in favorites",
+            200,
+            alreadyExists
+        );
+    }
 
-  const newFavorite = await Favorite.create({ userId, productId });
+    const newFavorite = await Favorite.create({
+        productId,
+        productName,
+        price,
+    });
 
-  return handleSucces(res, "Product added to favorites", 201, newFavorite);
+    return handleSucces(res, "Product added to favorites", 201, newFavorite);
 });
 
 // ✅ Remove from Favorites
 const removeFromFavorites = asyncPromise(async (req, res) => {
-  const { userId, productId } = req.body;
+    const { userId, productId } = req.body;
 
-  const removed = await Favorite.deleteOne({ userId, productId });
+    const removed = await Favorite.deleteOne({ userId, productId });
 
-  if (removed.deletedCount === 0) {
-    return handleError(null, res, "Favorite not found", 404);
-  }
+    if (removed.deletedCount === 0) {
+        return handleError(null, res, "Favorite not found", 404);
+    }
 
-  return handleSucces(res, "Product removed from favorites", 200, null);
+    return handleSucces(res, "Product removed from favorites", 200, null);
 });
 
 // ✅ Get All Favorites by User
 const getFavoritesByUser = asyncPromise(async (req, res) => {
-  const { userId } = req.params;
+    const { userId } = req.params;
 
-  const favorites = await Favorite.find({ userId }).populate("productId");
+    const favorites = await Favorite.find({ userId }).populate("productId");
 
-  if (!favorites.length) {
-    return handleError(null, res, "No favorites found", 404);
-  }
+    if (!favorites.length) {
+        return handleError(null, res, "No favorites found", 404);
+    }
 
-  return handleSucces(res, "Favorites fetched successfully", 200, favorites);
+    return handleSucces(res, "Favorites fetched successfully", 200, favorites);
 });
 
 // ✅ Get All Favorites (Admin)
 const getAllFavorites = asyncPromise(async (req, res) => {
-  const favorites = await Favorite.find().populate("productId userId");
+    const favorites = await Favorite.find().populate("productId userId");
 
-  if (!favorites.length) {
-    return handleError(null, res, "No favorites found", 404);
-  }
+    if (!favorites.length) {
+        return handleError(null, res, "No favorites found", 404);
+    }
 
-  return handleSucces(
-    res,
-    "All favorites fetched successfully",
-    200,
-    favorites
-  );
+    return handleSucces(
+        res,
+        "All favorites fetched successfully",
+        200,
+        favorites
+    );
 });
 
 export {
-  addToFavorites,
-  removeFromFavorites,
-  getFavoritesByUser,
-  getAllFavorites,
+    addToFavorites,
+    removeFromFavorites,
+    getFavoritesByUser,
+    getAllFavorites,
 };

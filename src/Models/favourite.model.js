@@ -2,14 +2,18 @@ import mongoose, { Schema } from "mongoose";
 
 const FavoriteSchema = new Schema(
     {
-        userId: {
+        productId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User",
             required: true,
         },
-        productId: {
+
+        productName: {
             type: String,
-            ref: "productSchema",
+            required: true,
+        },
+        price: {
+            type: Number,
             required: true,
         },
     },
