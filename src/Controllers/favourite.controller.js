@@ -4,7 +4,7 @@ import asyncPromise from "../Utils/asyncHandle.js";
 
 // ✅ Add to Favorites
 const addToFavorites = asyncPromise(async (req, res) => {
-    const { productId, productName, price } = req.body;
+    const { productId, productName, price, discountPrice } = req.body;
 
     const alreadyExists = await Favorite.findOne({ productId });
     if (alreadyExists) {
@@ -20,6 +20,7 @@ const addToFavorites = asyncPromise(async (req, res) => {
         productId,
         productName,
         price,
+        discountPrice,
     });
 
     return handleSucces(res, "Product added to favorites", 201, newFavorite);
@@ -64,10 +65,35 @@ const getAllFavorites = asyncPromise(async (req, res) => {
         response
     );
 });
+const DeleteFavoritesItems = async (req, res) => {
+    try {
+        const productId = req.params.id;
+        if (!productId) {
+            return res.status(400).json({ message: "Product ID is required." });
+        }
+        const result = await Favorite.deleteOne({ _id: productId });
 
+        if (result.deletedCount === 0) {
+            return res
+                .status(404)
+                .json({ message: "Product not found in cart." });
+        }
+
+        res.status(200).json({
+            message: "The product is removed from the cart.",
+            result,
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to delete cart item.",
+            error: error.message,
+        });
+    }
+};
 export {
     addToFavorites,
     removeFromFavorites,
     getFavoritesByUser,
     getAllFavorites,
+    DeleteFavoritesItems,
 };
